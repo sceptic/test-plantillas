@@ -1,5 +1,6 @@
 <?php
 use AdminEventos\Entities\Evento;
+use AdminEventos\Repositories\EventoRepo;
 use Underscore\Types\Arrays;
 use Underscore\Parse;
 class EventosController extends \BaseController {
@@ -22,10 +23,10 @@ class EventosController extends \BaseController {
 			$evento = Evento::create($input);
 		}	
 
-		$infoEventos=Eventos::infoEventos();
+		$infoEventos = Eventos::infoEventos();
 		extract($infoEventos);
 
-		$dataView=compact('eventos','categorias','evento');
+		$dataView = compact('eventos','categorias','evento');
 		Debugbar::info($dataView);
 		return View::make("eventos/index",$dataView);
 	}
@@ -42,33 +43,44 @@ class EventosController extends \BaseController {
 		if($input = Input::all())
 		{
 		  //Editar evento:
-			$evento = Evento::find($input['id']);
-			$evento->update($input);
-			$evento->save();	
+			$evento = EventoRepo::editarEvento($input);	
 			$success = 1;
-
+			
 		}else{
 			$evento = Evento::find($id);
 		}	
 		
-		$infoEventos=Eventos::infoEventos();
+		$infoEventos = Eventos::infoEventos();
 		extract($infoEventos);
-		
-		$futbol=Arrays::filter($eventos->toArray(), function($i) {
-    		return $i['categoria_id'] == 1; 
-		});
 
-		$json=json_encode($futbol);
-		
-		$array=json_decode($json, true);
-		var_dump($array); exit();
-		$dataView=compact('eventos','categorias','evento');
+		$dataView = compact('eventos','categorias','evento');
 		Debugbar::info($dataView);
 		return View::make("eventos/edit",$dataView);
 	}
 
 
 
+	public  function limpiarEventosPasados(){
+		 Evento::where('votes', '>', 100)->delete();
+	}
+
+
+
+	public function sendJSONT(){
+
+		$infoEventos = Eventos::infoEventos();
+		extract($infoEventos);
+		
+		$futbol = Arrays::filter($eventos->toArray(), function($i) {
+    		return $i['categoria_id'] == 1; 
+		});
+
+		$json = json_encode($futbol);
+		
+		$array = json_decode($json, true);
+		var_dump($array); exit();
+
+	}
 
 
 }

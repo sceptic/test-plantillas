@@ -66,20 +66,26 @@ class EventosController extends \BaseController {
 
 
 
-	public function sendJSONT(){
+	public function actualizar(){
 
 		$infoEventos = Eventos::infoEventos();
 		extract($infoEventos);
-		
-		$futbol = Arrays::filter($eventos->toArray(), function($i) {
-    		return $i['categoria_id'] == 1; 
-		});
 
-		$json = json_encode($futbol);
-		
-		$array = json_decode($json, true);
-		var_dump($array); exit();
+		$response=[];
+		foreach($categorias->toArray() as $categoria)
+		{
+			$response[$categoria['nombre']] = Arrays::filter($eventos->toArray(), function($i) use ($categoria) {
+    			return $i['categoria_id'] == $categoria['id']; 
+			});
+		}
 
+		$json = json_encode($response);
+
+		//CHECK RESPONSE//////////////////		
+		//$array = json_decode($json, true);
+		//var_dump($array); exit();
+		//////////////////////////////////
+		return $json;
 	}
 
 

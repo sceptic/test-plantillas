@@ -36,9 +36,10 @@
         {%endfor%}
         </tbody>
     </table>
-
-
-
+<br>
+{{form.openForm(route('actualizar-eventos'), 'post')}}
+{{form.closeForm('Actualizar eventos')}}
+<br>
 
 {%endblock%}
 {%block scripts%}

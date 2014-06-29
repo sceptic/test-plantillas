@@ -15,9 +15,18 @@ class CreateCategoriasTable extends Migration {
 		Schema::connection('eventosDB')->create('categorias', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('nombre');
+			$table->string('titulo');
+			$table->string('id_evento')->nullable();
+			$table->integer('categoria_id')->unsigned();
+
+			$table->date('fecha');
+			$table->date('fecha_fin');
+
+			$table->foreign('categoria_id')->references('id')->on('categorias');
 		});
 	}
+
+
 
 
 	/**
@@ -27,7 +36,7 @@ class CreateCategoriasTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('cvategorias');
+		Schema::drop('categorias');
 	}
 
 }

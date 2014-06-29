@@ -1,0 +1,41 @@
+{% extends 'layout.twig' %}
+
+{%block content%}
+<h1>Eventos:</h1>
+{{form.openForm(route('editar-evento'), 'put')}}
+<input type="hidden" name="id" value="{{evento.id}}"/>
+	{% include 'Forms/evento_form.twig'%}
+{{form.closeForm('Editar evento')}}
+
+<table id="dtable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+            	<th>Categoria</th>
+                <th>Evento</th>
+                <th>Fecha</th>
+                <th>Fin Evento</th>
+            </tr>
+        </thead>
+ 
+        <tbody>
+        	<tr>
+        		<td>{{evento.Categoria.nombre}}</td>
+	        	<td>{{evento.titulo}}</td>
+	        	<td>{{evento.fecha}}</td>
+	        	<td>{{evento.fecha_fin}}</td>
+        	</tr>
+        </tbody>
+    </table>
+
+
+
+
+{%endblock%}
+{%block scripts%}
+
+<script>
+{%raw%}
+
+{%endraw%}
+</script>
+{%endblock%}

@@ -12,18 +12,10 @@ class CreateEventosTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::connection('eventosDB')->create('eventos', function(Blueprint $table)
+		Schema::create('eventos', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('titulo');
-			$table->string('id_evento');
-			$table->integer('categoria_id')->unsigned();
-
-			$table->date('fecha');
-			$table->date('fecha_fin');
-
-			$table->foreign('categoria_id')->references('id')->on('categorias');
-
+			$table->timestamps();
 		});
 	}
 

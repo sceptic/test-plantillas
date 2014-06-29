@@ -15,13 +15,11 @@ Route::get('/', function()
 | Eventos:
 |-------------------------
 */
-Route::get('/gestion-eventos-landings/', 
+Route::match(array('GET', 'POST'),'/eventos-tv/', 
 	array('as' => 'eventos-index', 'uses' => 'EventosController@index'));
 
-Route::get('/gestion-eventos-landings/{$categoria}', 
-	array('as' => 'eventos-cat', 'uses' => 'EventosController@eventosCategoria'));
 
-Route::get('/gestion-eventos-landings/{$evento}', 
-	array('as' => 'eventos-cat', 'uses' => 'EventosController@evento'));
+Route::match(array('GET', 'PUT'),'/editar-evento/{id}/', 
+	array('as' => 'editar-evento', 'uses' => 'EventosController@edit'));
 
 

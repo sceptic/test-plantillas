@@ -1,27 +1,54 @@
 {% extends 'layout.twig' %}
 
 {%block content%}
+<h1>Eventos:</h1>
+{{form.openForm(route('eventos-index'), 'post')}}
+	{% include 'Forms/evento_form.twig'%}
+{{form.closeForm('Añadir nuevo evento')}}
 
-<form method="post">
-	
-</form>
+<table id="dtable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+            	<th>Categoria</th>
+                <th>Evento</th>
+                <th>Fecha</th>
+                <th>Fin Evento</th>
+            </tr>
+        </thead>
+ 
+        <tfoot>
+            <tr>
+            	<th>Categoria</th>
+                <th>Evento</th>
+                <th>Fecha</th>
+                <th>Fin Evento</th>
+            </tr>
+        </tfoot>
+ 
+        <tbody>
+        {%for e in eventos%}
+        	<tr>
+        		<td>{{e.Categoria.nombre}}</td>
+	        	<td>{{e.titulo}}</td>
+	        	<td>{{e.fecha}}</td>
+	        	<td>{{e.fecha_fin}}</td>
+        	</tr>
+        {%endfor%}
+        </tbody>
+    </table>
 
 
 
 
-<div class="large-12 columns success">
-<h4>DEBUG:</h4>
-<pre class="" style="font-size:12px; padding:10px; background-color:#fff; border: 1px solid #aaa;">
-
-</pre>
-</div>
 {%endblock%}
-{%block script%}
+{%block scripts%}
 
 <script>
-
-
-
+{%raw%}
+$(document).ready(function() {
+    $('#dtable').dataTable();
+} );
+{%endraw%}
 </script>
 {%endblock%}
 

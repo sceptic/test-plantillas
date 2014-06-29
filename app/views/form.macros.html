@@ -1,0 +1,58 @@
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- Form labels: -->
+
+{% macro input_text(label,id,placeholder,cols,required, value) %}
+    <div class="large-{{cols|default(3)}} columns">
+		<h4>{{label}}:</h4>
+		<p><input type="text" {%if required == 1%}required{%endif%} value="{{value|default('')}}" placeholder="{{placeholder|default('')}}" name="{{id}}" id="{{id}}"/><p>
+	</div>
+{% endmacro %}
+
+{% macro input_select(
+		label,
+		id,
+		items,
+		property_id,
+		property_name,
+		default,
+		cols,
+		required,
+		empty_value
+	) 
+%}
+    <div class="large-{{cols|default(3)}} columns">
+		<h4>{{label}}:</h4>
+		<p>
+			<select {%if required == 1%}required{%endif%} name="{{id}}" id="{{id}}">
+				<option value="">{{empty_value}}</option>
+				{% for i in items %}
+					<option {%if default == i[property_id]%}selected{%endif%} value="{{i[property_id]}}">{{i[property_name]}}</option>
+				{%endfor%}
+			</select>
+		<p>
+	</div>
+{% endmacro %}
+
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- Form buttons: -->
+
+{% macro submit(value) %}
+
+{% endmacro %}
+
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- Form Tags: -->
+
+{% macro openForm(route, method) %}
+{{ form_open({'url': route, 'method': method}) }}
+	<div class="large-12 columns">
+{% endmacro %}
+
+{% macro closeForm(value) %}
+	<div class="large-12 columns">
+	<input  class="button" id="enviar" name="submit" type="submit" value="{{value|default('enviar')}}">
+    </div></div>
+    </form>
+{% endmacro %}

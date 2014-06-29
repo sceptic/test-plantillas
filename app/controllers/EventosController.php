@@ -1,92 +1,74 @@
 <?php
-
+use AdminEventos\Entities\Evento;
+use Underscore\Types\Arrays;
+use Underscore\Parse;
 class EventosController extends \BaseController {
 
-	
-	public function __construct(){
-
-		echo "HOLA";
+	public function __constructor(Evento $evento){
+		$this->evento = $evento;
 	}
-
+	
 	/**
-	 * Display a listing of the resource.
-	 * GET /eventos
-	 *
+	 * Listar eventos TV. Crear nuevos eventos
+	 * GET-POST 
+	 * /eventos-tv/
+	 * 
 	 * @return Response
 	 */
 	public function index()
 	{
-		return View::make("eventos/index", array('key'=>'value'));
+		if($input = Input::all())
+		{
+			$evento = Evento::create($input);
+		}	
+
+		$infoEventos=Eventos::infoEventos();
+		extract($infoEventos);
+
+		$dataView=compact('eventos','categorias','evento');
+		Debugbar::info($dataView);
+		return View::make("eventos/index",$dataView);
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /eventos/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /eventos
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-	/**
-	 * Display the specified resource.
-	 * GET /eventos/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /eventos/{id}/edit
+	 * GET|PUT /editar-evento/{id}/
 	 *
-	 * @param  int  $id
-	 * @return Response
 	 */
 	public function edit($id)
-	{
-		//
+	{	
+		$success = 0;
+		if($input = Input::all())
+		{
+		  //Editar evento:
+			$evento = Evento::find($input['id']);
+			$evento->update($input);
+			$evento->save();	
+			$success = 1;
+
+		}else{
+			$evento = Evento::find($id);
+		}	
+		
+		$infoEventos=Eventos::infoEventos();
+		extract($infoEventos);
+		
+		$futbol=Arrays::filter($eventos->toArray(), function($i) {
+    		return $i['categoria_id'] == 1; 
+		});
+
+		$json=json_encode($futbol);
+		
+		$array=json_decode($json, true);
+		var_dump($array); exit();
+		$dataView=compact('eventos','categorias','evento');
+		Debugbar::info($dataView);
+		return View::make("eventos/edit",$dataView);
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /eventos/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /eventos/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+
+
 
 }

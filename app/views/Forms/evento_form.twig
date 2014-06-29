@@ -1,0 +1,15 @@
+
+	{{form.input_text('Evento','titulo','Ejemplo: R.Madrid vs F.C. Barcelona','',1,evento.titulo|default(''))}}
+    {{form.input_text('Id Plantilla','id_evento','Ejemplo: Plantilla R.Madrid=3','',1,evento.id_evento|default(''))}}
+    {{form.input_text('Fecha','fecha','Ejemplo: 2014-05-06 10:00','',1,evento.fecha|default(''))}}
+    {{form.input_text('Fin evento','fecha_fin','Ejemplo: 2014-05-06 10:00','',1,evento.fecha_fin|default(''))}}
+     {{form.input_select(
+		'Categoria',
+		'categoria_id',
+		categorias,
+		'id',
+		'nombre',
+		evento.categoria_id|default(''),
+		'',
+		1,
+		'Selecciona categoria')}}
